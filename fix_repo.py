@@ -1,4 +1,22 @@
-# HoloRobust
+import os
+import shutil
+
+# Fix 1: Move images from assets/assests/ to assets/
+src_cyber = "assets/assests/cyber_benchmark.png"
+src_hep   = "assets/assests/hep_benchmark.png"
+dst_cyber = "assets/cyber_benchmark.png"
+dst_hep   = "assets/hep_benchmark.png"
+
+if os.path.exists(src_cyber):
+    shutil.copy(src_cyber, dst_cyber)
+    print(f"Moved: {src_cyber} -> {dst_cyber}")
+
+if os.path.exists(src_hep):
+    shutil.copy(src_hep, dst_hep)
+    print(f"Moved: {src_hep} -> {dst_hep}")
+
+# Fix 2: Write correct README with real numbers and correct image paths
+readme = """# HoloRobust
 
 **Holographic & Geometric Physics-Informed Robust ML Framework**
 
@@ -211,3 +229,19 @@ MIT — free for academic and commercial use. See [LICENSE](LICENSE).
 
 For consulting, integration, or research collaboration:
 GitHub: [@vishal1601-2005](https://github.com/vishal1601-2005)
+"""
+
+with open("README.md", "w", encoding="utf-8") as f:
+    f.write(readme)
+print("README.md written successfully")
+
+# Fix 3: Remove nested assests folder
+nested = "assets/assests"
+if os.path.exists(nested):
+    shutil.rmtree(nested)
+    print(f"Removed nested folder: {nested}")
+
+print("\nAll fixes applied. Now run in Git Bash:")
+print("  git add -A")
+print("  git commit -m 'Fix image paths, real benchmark numbers in README'")
+print("  git push origin main")

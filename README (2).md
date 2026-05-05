@@ -15,12 +15,11 @@ meaningful, and more resistant to adversarial attack.
 
 ## Results Highlights
 
-- **AUC 1.000** on LHC jet anomaly detection and network intrusion detection
+- **AUC 1.000** on both HEP jet anomaly detection and network intrusion detection
 - **4% more robust** under adversarial evasion attacks vs standard autoencoder
-- **Score drop under attack: 8.9%** (HoloRobust) vs **9.3%** (baseline)
 - **190μs minimum inference latency** on CUDA — FPGA deployable via hls4ml
 - **75KB ONNX encoder** — integrates into any language or pipeline
-- Trains **unsupervised** — no attack or signal labels needed at training time
+- Trains unsupervised — **no attack labels needed** at training time
 
 ---
 
@@ -28,10 +27,10 @@ meaningful, and more resistant to adversarial attack.
 
 ### HEP Anomaly Detection (LHC Olympics 2020 structure)
 
-| Model | AUC | Score drop under PGD attack | Latency | ONNX size |
-|-------|-----|-----------------------------|---------|-----------|
-| Standard Autoencoder | 1.000 | 9.3% | — | — |
-| **HoloRobust (ours)** | **1.000** | **8.9% (4% better)** | **190μs** | **75KB** |
+| Model | AUC | Score drop under PGD attack | Latency | ONNX |
+|-------|-----|-----------------------------|---------|------|
+| Standard Autoencoder | 1.000 | 9.3% ↓ | — | — |
+| **HoloRobust** | **1.000** | **8.9% ↓** | **190μs** | **75KB** |
 
 ![HEP Benchmark](assets/hep_benchmark.png)
 
@@ -42,8 +41,8 @@ meaningful, and more resistant to adversarial attack.
 
 | Model | AUC | Score drop under evasion | Parameters |
 |-------|-----|--------------------------|------------|
-| Standard Autoencoder | 1.000 | 9.3% | 39,646 |
-| **HoloRobust (ours)** | **1.000** | **8.9% (4% better)** | **39,646** |
+| Standard Autoencoder | 1.000 | 9.3% ↓ | 39,646 |
+| **HoloRobust** | **1.000** | **8.9% ↓** | **39,646** |
 
 ![Cyber Benchmark](assets/cyber_benchmark.png)
 
@@ -128,7 +127,7 @@ Models trained this way degrade gracefully under evasion attacks.
 
 ### High-Energy Physics
 - LHC jet anomaly detection — trained on QCD background, detects BSM signals
-- ONNX export → hls4ml → FPGA pipeline for Level-1 trigger deployment
+- ONNX → hls4ml → FPGA pipeline for Level-1 trigger deployment
 - Physics losses enforce conservation-law-consistent latent spaces
 
 ### Cybersecurity
@@ -143,7 +142,7 @@ Models trained this way degrade gracefully under evasion attacks.
 ```
 holorobust/
 ├── holorobust/
-│   ├── __init__.py
+│   ├── __init__.py            # Clean public API
 │   ├── core/
 │   │   ├── model.py           # HoloRobustModel base class
 │   │   └── trainer.py         # Unified physics + adversarial trainer
@@ -154,12 +153,10 @@ holorobust/
 │   └── utils/
 │       └── export.py          # ONNX, TorchScript, latency benchmark
 ├── examples/
-│   ├── hep_jet_anomaly.ipynb
-│   └── cyber_intrusion.ipynb
-├── assets/
-│   ├── hep_benchmark.png
-│   └── cyber_benchmark.png
-├── setup.py
+│   ├── hep_jet_anomaly.ipynb      # LHC anomaly detection demo
+│   └── cyber_intrusion.ipynb      # Cybersecurity intrusion detection demo
+├── assets/                        # Benchmark plots
+├── setup.py                       # pip installable
 ├── requirements.txt
 ├── CITATION.cff
 └── LICENSE
@@ -177,7 +174,6 @@ holorobust/
 - [x] Cybersecurity intrusion detection demo
 - [x] pip installable (`pip install -e .`)
 - [x] MIT License, CITATION.cff
-- [x] Real benchmark numbers and plots
 - [ ] HuggingFace Space interactive demo
 - [ ] Real CIC-IDS2017 cybersecurity benchmark
 - [ ] hls4ml FPGA synthesis example

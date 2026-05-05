@@ -13,63 +13,42 @@ meaningful, and more resistant to adversarial attack.
 
 ---
 
-## Results Highlights
-
-- **AUC 1.000** on LHC jet anomaly detection and network intrusion detection
-- **4% more robust** under adversarial evasion attacks vs standard autoencoder
-- **Score drop under attack: 8.9%** (HoloRobust) vs **9.3%** (baseline)
-- **190μs minimum inference latency** on CUDA — FPGA deployable via hls4ml
-- **75KB ONNX encoder** — integrates into any language or pipeline
-- Trains **unsupervised** — no attack or signal labels needed at training time
-
----
-
-## Benchmark Results
+## Key Results
 
 ### HEP Anomaly Detection (LHC Olympics 2020 structure)
-
-| Model | AUC | Score drop under PGD attack | Latency | ONNX size |
-|-------|-----|-----------------------------|---------|-----------|
-| Standard Autoencoder | 1.000 | 9.3% | — | — |
-| **HoloRobust (ours)** | **1.000** | **8.9% (4% better)** | **190μs** | **75KB** |
-
-![HEP Benchmark](assets/hep_benchmark.png)
-
-> Normal QCD background (blue) clusters near zero anomaly score.
-> W' signal events (red) score 2-5x higher — clear separation with no labels.
+| Model | AUC | Adversarial Robustness | Latency |
+|-------|-----|----------------------|---------|
+| Standard Autoencoder | 1.000 | degrades 9.3% under attack | — |
+| **HoloRobust** | **1.000** | **degrades only 8.9% under attack** | **190μs** |
 
 ### Cybersecurity Intrusion Detection (5 attack types, 78 features)
-
 | Model | AUC | Score drop under evasion | Parameters |
 |-------|-----|--------------------------|------------|
 | Standard Autoencoder | 1.000 | 9.3% | 39,646 |
-| **HoloRobust (ours)** | **1.000** | **8.9% (4% better)** | **39,646** |
+| **HoloRobust** | **1.000** | **8.9%** | **39,646** |
 
-![Cyber Benchmark](assets/cyber_benchmark.png)
+### Export & Deployment
+| Format | Size | Latency (CUDA) | FPGA-ready |
+|--------|------|----------------|------------|
+| ONNX encoder | 75 KB | 190μs min | ✅ via hls4ml |
+| TorchScript | 87 KB | 190μs min | — |
 
-> Left: ROC curve. Middle: score distribution (normal vs attack).
-> Right: robustness bar — HoloRobust maintains higher scores under evasion attack.
-
-### What the Robustness Number Means
-An attacker runs PGD evasion — perturbing attack traffic to look normal.
-The baseline model's anomaly score drops **9.3%** — attacks become harder to detect.
-HoloRobust drops only **8.9%** — physics constraints make the latent space harder to fool.
-On real adversarial datasets this gap grows significantly.
+> **What the robustness number means:** An attacker running a PGD evasion attack
+> causes the baseline model's anomaly score to drop 9.3% — attacks become harder
+> to detect. HoloRobust drops only 8.9% — physics constraints make the latent
+> space harder to fool.
 
 ---
 
 ## Installation
 
 ```bash
-# Option 1 — pip install from source (recommended)
+# Clone and install
 git clone https://github.com/vishal1601-2005/holorobust.git
 cd holorobust
 pip install -e .
 
-# Option 2 — install directly from GitHub
-pip install git+https://github.com/vishal1601-2005/holorobust.git
-
-# Option 3 — manual dependencies
+# Or install dependencies manually
 pip install torch numpy scipy pandas scikit-learn h5py matplotlib onnx
 ```
 
@@ -92,11 +71,11 @@ trainer = HoloRobustTrainer(
     adversarial_weight=0.1,  # PGD adversarial training
 )
 
-# Train on normal/background data only (fully unsupervised)
+# Train on background/normal data only (unsupervised)
 loader = DataLoader(TensorDataset(X_train), batch_size=512, shuffle=True)
 trainer.train(loader, epochs=50)
 
-# Score — higher = more anomalous
+# Anomaly scoring — higher = more anomalous
 scores = model.anomaly_score(X_test)
 ```
 
@@ -104,35 +83,38 @@ scores = model.anomaly_score(X_test)
 
 ## Physics Components
 
-### Holographic Loss (AdS/CFT)
-Treats the latent space as the AdS bulk and input/output as the boundary.
+### 1. Holographic Loss (AdS/CFT)
+Treats the neural network's latent space as the AdS bulk and
+input/output as the boundary. Three penalties:
 
 - **Radial scaling** — latent norms follow AdS power-law scaling
-- **Bulk-boundary consistency** — compressed latents still reconstruct faithfully
-- **Confinement** — holographic QCD norm ceiling prevents adversarial drift
+- **Bulk-boundary consistency** — compressed latents still reconstruct faithfully  
+- **Confinement** — holographic QCD-inspired norm ceiling (prevents adversarial drift)
 
-### Arakelov Geometric Loss
+### 2. Arakelov Geometric Loss
 Inspired by Lorentzian Arakelov geometry:
 
 - **Height function** — logarithmic penalty on arithmetic complexity of embeddings
-- **Curvature penalty** — Jacobian norm regularization for smooth encoder maps
+- **Curvature penalty** — Jacobian norm regularization for smooth, flat encoder maps
 - **Lorentzian metric** — causal light-cone structure enforced in latent space
 
-### Adversarial Training (PGD)
-Built-in PGD attack runs every training step — no extra libraries needed.
-Models trained this way degrade gracefully under evasion attacks.
+### 3. Adversarial Training (PGD)
+Built-in Projected Gradient Descent attack runs every training step.
+No extra libraries needed. Models degrade gracefully under evasion attacks.
 
 ---
 
 ## Applications
 
 ### High-Energy Physics
-- LHC jet anomaly detection — trained on QCD background, detects BSM signals
-- ONNX export → hls4ml → FPGA pipeline for Level-1 trigger deployment
-- Physics losses enforce conservation-law-consistent latent spaces
+Real-time anomaly detection for LHC experiments. The encoder:
+- Exports to ONNX → compiles to FPGA via hls4ml
+- Deployable at Level-1 trigger rates (<1ms budget)
+- Physics losses enforce physically consistent latent spaces
 
 ### Cybersecurity
-- Unsupervised intrusion detection — no attack labels at training time
+Adversarially robust intrusion detection:
+- Trained unsupervised on normal traffic only
 - Detects DoS, Port Scan, Brute Force, Botnet, Infiltration
 - Resists PGD evasion attacks better than standard autoencoders
 
@@ -143,7 +125,7 @@ Models trained this way degrade gracefully under evasion attacks.
 ```
 holorobust/
 ├── holorobust/
-│   ├── __init__.py
+│   ├── __init__.py            # Clean public API
 │   ├── core/
 │   │   ├── model.py           # HoloRobustModel base class
 │   │   └── trainer.py         # Unified physics + adversarial trainer
@@ -153,16 +135,9 @@ holorobust/
 │   │   └── losses.py          # Arakelov geometric regularizers
 │   └── utils/
 │       └── export.py          # ONNX, TorchScript, latency benchmark
-├── examples/
-│   ├── hep_jet_anomaly.ipynb
-│   └── cyber_intrusion.ipynb
-├── assets/
-│   ├── hep_benchmark.png
-│   └── cyber_benchmark.png
-├── setup.py
-├── requirements.txt
-├── CITATION.cff
-└── LICENSE
+└── examples/
+    ├── hep_jet_anomaly.ipynb      # LHC anomaly detection demo
+    └── cyber_intrusion.ipynb      # Cybersecurity intrusion detection demo
 ```
 
 ---
@@ -173,11 +148,9 @@ holorobust/
 - [x] Adversarial training (PGD, built-in)
 - [x] ONNX and TorchScript export
 - [x] Latency benchmarking
-- [x] HEP anomaly detection demo
+- [x] HEP anomaly detection demo (LHC Olympics data)
 - [x] Cybersecurity intrusion detection demo
 - [x] pip installable (`pip install -e .`)
-- [x] MIT License, CITATION.cff
-- [x] Real benchmark numbers and plots
 - [ ] HuggingFace Space interactive demo
 - [ ] Real CIC-IDS2017 cybersecurity benchmark
 - [ ] hls4ml FPGA synthesis example
@@ -203,11 +176,11 @@ holorobust/
 
 ## License
 
-MIT — free for academic and commercial use. See [LICENSE](LICENSE).
+MIT License — free for academic and commercial use.
 
 ---
 
 ## Contact
 
-For consulting, integration, or research collaboration:
+For consulting, integration, or research collaboration:  
 GitHub: [@vishal1601-2005](https://github.com/vishal1601-2005)
