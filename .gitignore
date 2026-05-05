@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+data/
+*.h5
+exports/
+anaconda_projects/
+fix_model.py
+download_data.py
+hep_jet_anomaly.py
+Untitled.ipynb
+Untitled1.ipynb
