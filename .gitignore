@@ -10,3 +10,16 @@ download_data.py
 hep_jet_anomaly.py
 Untitled.ipynb
 Untitled1.ipynb
+# Egg info
+*.egg-info/
+holorobust.egg-info/
+
+# Duplicate READMEs
+README (*.md
+
+# Temp scripts
+fix_repo.py
+create_cyber_notebook.py
+fix_model.py
+download_data.py
+hep_jet_anomaly.py
