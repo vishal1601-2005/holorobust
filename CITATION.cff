@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use HoloRobust, please cite it as below."
+type: software
+title: "HoloRobust: Holographic and Geometric Physics-Informed Robust ML Framework"
+authors:
+  - family-names: Vishal
+    given-names: ""
+    alias: vishal1601-2005
+version: 0.1.0
+date-released: "2025-05-05"
+url: "https://github.com/vishal1601-2005/holorobust"
+repository-code: "https://github.com/vishal1601-2005/holorobust"
+license: MIT
+keywords:
+  - machine learning
+  - physics-informed neural networks
+  - holographic
+  - AdS/CFT
+  - Arakelov geometry
+  - anomaly detection
+  - adversarial robustness
+  - high energy physics
+  - cybersecurity
+abstract: >
+  HoloRobust is an open-source PyTorch framework that injects ideas from
+  AdS/CFT holography and Lorentzian Arakelov geometry into ML training,
+  producing adversarially robust anomaly detectors for high-energy physics
+  and cybersecurity applications.
