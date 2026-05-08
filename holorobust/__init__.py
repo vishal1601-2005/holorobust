@@ -33,6 +33,7 @@ from holorobust.geometric.losses   import ArakelovLoss
 
 # Export utilities
 from holorobust.utils.export import ModelExporter
+from holorobust.utils.selection import tv_distance_test
 
 __all__ = [
     "HoloRobustModel",
@@ -40,5 +41,6 @@ __all__ = [
     "HolographicLoss",
     "ArakelovLoss",
     "ModelExporter",
+    "tv_distance_test",
     "__version__",
 ]
