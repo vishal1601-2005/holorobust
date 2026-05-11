@@ -1,0 +1,41 @@
+{
+  "LHCO": {
+    "ae_mean": 0.7881,
+    "ae_std": 0.0034,
+    "hr_mean": 0.8056,
+    "hr_std": 0.0018,
+    "delta": 1.75,
+    "seeds": [
+      42,
+      123,
+      777
+    ],
+    "dataset": "LHC Olympics 2020 real"
+  },
+  "SMAP": {
+    "ae_mean": 0.4118,
+    "ae_std": 0.0067,
+    "hr_mean": 0.4285,
+    "hr_std": 0.0073,
+    "delta": 1.66,
+    "seeds": [
+      42,
+      123,
+      777
+    ],
+    "dataset": "NASA SMAP real telemetry"
+  },
+  "CWRU": {
+    "ae_mean": 0.9883,
+    "ae_std": 0.0003,
+    "hr_mean": 0.9892,
+    "hr_std": 0.0004,
+    "delta": 0.09,
+    "seeds": [
+      42,
+      123,
+      777
+    ],
+    "dataset": "CWRU Bearing Fault real"
+  }
+}
