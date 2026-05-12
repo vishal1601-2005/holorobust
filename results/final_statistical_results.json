@@ -1,0 +1,55 @@
+{
+  "LHCO": {
+    "ae": 0.7881,
+    "ae_std": 0.0034,
+    "hr": 0.8056,
+    "hr_std": 0.0018,
+    "delta": 1.75,
+    "significant": true,
+    "seeds": [
+      42,
+      123,
+      777
+    ],
+    "tv": 0.037
+  },
+  "CWRU": {
+    "ae": 0.9883,
+    "ae_std": 0.0003,
+    "hr": 0.9892,
+    "hr_std": 0.0004,
+    "delta": 0.09,
+    "significant": true,
+    "seeds": [
+      42,
+      123,
+      777
+    ],
+    "tv": 0.052
+  },
+  "SMAP_synthetic": {
+    "ae": 0.8968,
+    "ae_std": 0.0,
+    "hr": 0.9001,
+    "hr_std": 0.0,
+    "delta": 0.33,
+    "significant": "single_run",
+    "tv": 0.031
+  },
+  "CIC_IDS2017": {
+    "ae": 0.9498,
+    "ae_std": 0.003,
+    "hr": 0.9472,
+    "hr_std": 0.0032,
+    "delta": -0.26,
+    "significant": false,
+    "seeds": [
+      42,
+      123,
+      777
+    ],
+    "tv": 0.061
+  },
+  "preprocessing": "QuantileTransformer(n_quantiles=1000) + clip 3sigma",
+  "note": "CIC result is null (not negative) \u2014 preprocessing artifact resolved"
+}
