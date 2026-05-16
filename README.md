@@ -211,7 +211,8 @@ scores = model.anomaly_score(torch.tensor(X_test))
 - [x] pip installable, MIT license, CITATION.cff
 - [ ] arXiv preprint (in preparation)
 - [ ] REST API endpoint for anomaly scoring
-- [ ] HuggingFace Space interactive demo
+- [x] HuggingFace Space interactive demo
+    https://huggingface.co/spaces/Vishal1601/holorobust-demo
 - [ ] hls4ml FPGA synthesis benchmark
 - [ ] Temporal encoder for contextual anomaly detection
 - [ ] PyPI release
