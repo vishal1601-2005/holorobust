@@ -14,3 +14,10 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+anaconda_projects/
+data/
+exports/
+download_data.py
+fix_model.py
+holorobust/fix_model.py
+hep_jet_anomaly.py
