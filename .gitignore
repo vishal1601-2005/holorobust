@@ -1,25 +1,16 @@
+Untitled*.ipynb
+Holorobust_RO_Plant_pilot.ipynb
+full_scored_data.csv
+ro_plant_sensor_data.csv
+top_anomalies.csv
+download_blackbox.py.py
+download_smap.py
+holorobust_ro_anomaly_report.png
+model_validation_checks.png
+sensor_correlation.png
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
-data/
-*.h5
-exports/
-anaconda_projects/
-fix_model.py
-download_data.py
-hep_jet_anomaly.py
-Untitled.ipynb
-Untitled1.ipynb
-# Egg info
 *.egg-info/
-holorobust.egg-info/
-
-# Duplicate READMEs
-README (*.md
-
-# Temp scripts
-fix_repo.py
-create_cyber_notebook.py
-fix_model.py
-download_data.py
-hep_jet_anomaly.py
+dist/
+build/
